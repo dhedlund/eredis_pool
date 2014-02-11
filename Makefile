@@ -1,30 +1,8 @@
-ERL=erl
-BEAMDIR=./deps/*/ebin ./ebin
-REBAR=./rebar
+PROJECT = eredis_pool
 
-all: get-deps compile
+DEPS = eredis poolboy
 
-update-deps:
-	@$(REBAR) update-deps
+dep_eredis = https://github.com/wooga/eredis.git master
+dep_poolboy = https://github.com/devinus/poolboy.git master
 
-get-deps:
-	@$(REBAR) get-deps
-
-compile:
-	@$(REBAR) compile
-
-xref:
-	@$(REBAR) xref skip_deps=true
-
-clean: 
-	@ $(REBAR) clean
-
-eunit:
-	@rm -rf .eunit
-	@mkdir -p .eunit
-	@ERL_FLAGS="-config test.config" $(REBAR) skip_deps=true eunit 
-
-test: eunit
-
-edoc:
-	@$(REBAR) skip_deps=true doc
+include erlang.mk
